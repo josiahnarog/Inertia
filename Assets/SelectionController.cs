@@ -96,6 +96,7 @@ public class SelectionController : MonoBehaviour {
         SelectionIndicator.transform.position = uGO.transform.position;
     }
 
+
     public void SelectNextUnit( bool skipDoneUnits )
     {
         Player player = hexMap.CurrentPlayer;

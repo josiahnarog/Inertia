@@ -6,6 +6,7 @@ public class BuildCityButton : MonoBehaviour {
 
     public void BuildCity()
     {
+        Debug.LogError("I pushed a button.");
         City city = new City();
 
         HexMap map = GameObject.FindObjectOfType<HexMap>();

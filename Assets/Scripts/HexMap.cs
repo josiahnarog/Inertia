@@ -39,6 +39,11 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         {
             StartCoroutine( DoAllUnitMoves() );
         }
+        
+        // if(Input.GetKeyDown(KeyCode.R) &&  != null)
+        // {
+        //     Unit u = SelectedUnit;
+        // }
     }
 
     IEnumerator DoAllUnitMoves()
@@ -392,6 +397,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
 
         GameObject unitGO = (GameObject)Instantiate(prefab, myHexGO.transform.position, Quaternion.identity, myHexGO.transform);
         unit.OnObjectMoved += unitGO.GetComponent<UnitView>().OnUnitMoved;
+        unit.OnObjectSteered += unitGO.GetComponent<UnitView>().OnUnitSteered;
 
         CurrentPlayer.AddUnit(unit);
         unit.OnObjectDestroyed += OnUnitDestroyed;

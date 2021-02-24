@@ -12,8 +12,13 @@ public class UnitSelectionPanel : MonoBehaviour {
 
     public Text Title;
     public Text Movement;
+    public Text Facing;
     public Text HexPath;
+    // public Text TurnRatingRemaining;
 
+    public GameObject TurnCounterClockwiseButton;
+    public GameObject MoveAheadButton;
+    public GameObject TurnClockwiseButton;
     public GameObject CityBuildButton;
 
     SelectionController selectionController;
@@ -27,14 +32,21 @@ public class UnitSelectionPanel : MonoBehaviour {
             Title.text    = selectionController.SelectedUnit.Name;
 
             Movement.text = string.Format(
-                "{0}/{1}", 
+                "MP Remaining: {0}/{1}", 
                 selectionController.SelectedUnit.MovementRemaining, 
                 selectionController.SelectedUnit.Movement
             );
 
             Hex[] hexPath = selectionController.SelectedUnit.GetHexPath();
             HexPath.text  = hexPath == null ? "0" : hexPath.Length.ToString();
+            
+            Direction facing = selectionController.SelectedUnit.Facing;
+            Facing.text = string.Format("Current Facing: {0} {1} {2}",
+	            facing.Id, facing.Name, facing.Rotation);
 
+            TurnCounterClockwiseButton.SetActive( true );
+            MoveAheadButton.SetActive( true );
+            TurnClockwiseButton.SetActive( true );
 
             if( selectionController.SelectedUnit.CanBuildCities && selectionController.SelectedUnit.Hex.City == null)
             {

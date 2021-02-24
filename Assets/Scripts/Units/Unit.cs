@@ -8,16 +8,20 @@ public class Unit : MapObject, IQPathUnit {
 
     public Unit()
     {
-        Name = "Dwarf";
+        Name = "Ship";
     }
 
-    public int Facing = 0;
+    public Direction Facing  = Direction.East;
     public int Movement = 2;
     public int MovementRemaining = 2;
+    public int SteerRating = 0;
+    public int SteerPointsRemaining = 0;
+
     public bool CanBuildCities = false;
     public bool SkipThisUnit = false;
-
-
+    public delegate void ObjectSteeredDelegate ( Direction newFacing ); 
+    public event ObjectSteeredDelegate OnObjectSteered;
+    
     /// <summary>
     /// List of hexes to walk through (from pathfinder).
     /// NOTE: First item is always the hex we are standing in.
@@ -93,6 +97,20 @@ public class Unit : MapObject, IQPathUnit {
     {
         SkipThisUnit = false;
         MovementRemaining = Movement;
+    }
+    
+    public void ResetSteerPoints()
+    {
+        SteerPointsRemaining = SteerRating;
+    }
+    
+    public void DoSteer(SteerDirection steer)
+    {
+        if(SteerPointsRemaining == 0){
+            Facing = Facing.DirectionAfterSteer(steer);
+            ResetSteerPoints();
+            OnObjectSteered(Facing);
+        }
     }
 
     /// <summary>
@@ -239,6 +257,8 @@ public class Unit : MapObject, IQPathUnit {
         return turnsToDateWhole + turnsUsedAfterThismove;
 
     }
+    
+
 
     override public void SetHex( Hex newHex )
     {
