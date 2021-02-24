@@ -8,9 +8,9 @@ public class MoveAheadButton : MonoBehaviour
     {
         SelectionController sc = GameObject.FindObjectOfType<SelectionController>();
         Unit u = sc.SelectedUnit;
+        u.DoMoveAhead();
         
         Debug.LogError("I pushed the Move Ahead button.");
-        Debug.LogError("I start out this direction:" + u.Facing);
     }
     
 }

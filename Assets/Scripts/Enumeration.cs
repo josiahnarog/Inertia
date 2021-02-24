@@ -57,11 +57,11 @@ public class Direction : Enumeration
     }
 
     public static Direction East = new Direction(1, nameof(East), 0, 1, 0);
-    public static Direction SouthEast = new Direction(2, nameof(SouthEast), 60, 0, 1);
-    public static Direction SouthWest = new Direction(3, nameof(SouthWest), 120, -1, 1);
+    public static Direction SouthEast = new Direction(2, nameof(SouthEast), 60, 1, -1);
+    public static Direction SouthWest = new Direction(3, nameof(SouthWest), 120, 0, -1);
     public static Direction West = new Direction(4, nameof(West), 180, -1, 0);
-    public static Direction NorthWest = new Direction(5, nameof(NorthWest), 240, 0, -1);
-    public static Direction NorthEast = new Direction(6, nameof(NorthEast), 320, 1, -1);
+    public static Direction NorthWest = new Direction(5, nameof(NorthWest), 240, -1, 1);
+    public static Direction NorthEast = new Direction(6, nameof(NorthEast), 320, 0, 1);
     
     private static readonly List<Direction> Compass = new List<Direction>()
     {

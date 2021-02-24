@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitView : MonoBehaviour {
 
+    // TODO: 
     void Start()
     {
         newPosition = this.transform.position;
@@ -15,27 +16,20 @@ public class UnitView : MonoBehaviour {
 
     Vector3 currentVelocity;
     Vector3 currentRotationalVelocity;
+    
+    // TODO: We should actually set this speed to correspond to the pulse, so fast ships move... faster.
     float smoothTime = 0.5f;
     private float smoothRotation = 60; //Degrees per second.
 
     public void OnUnitSteered(Direction newDirection)
     {
         Vector3 oldAngles = this.transform.eulerAngles;
-
-        if (newAngles.y == 0)
-        {
-            Debug.LogError("It's a Zero!");
-            oldAngles.y = -60;
-        }
-
         newAngles = new Vector3(
                 0, newDirection.Rotation, 0
             );
-        
-        // TODO Need to be able to steer from a negative angle to 0 as well;
         currentRotationalVelocity = Vector3.zero;
     }
-
+    
     public void OnUnitMoved( Hex oldHex, Hex newHex )
     {
         // This GameObject is supposed to be a child of the hex we are
@@ -50,11 +44,7 @@ public class UnitView : MonoBehaviour {
         Vector3 oldPosition = oldHex.PositionFromCamera();
         newPosition = newHex.PositionFromCamera();
         currentVelocity = Vector3.zero;
-
-
-        // TODO:  newPosition's Y component needs to be set from HexComponent's VerticalOffset
-        oldPosition.y += oldHex.HexMap.GetHexGO(oldHex).GetComponent<HexComponent>().VerticalOffset;
-        newPosition.y += newHex.HexMap.GetHexGO(newHex).GetComponent<HexComponent>().VerticalOffset;
+        
         this.transform.position = oldPosition;
 
         if( Vector3.Distance(this.transform.position, newPosition) > 2 )
@@ -69,9 +59,6 @@ public class UnitView : MonoBehaviour {
             GameObject.FindObjectOfType<HexMap>().AnimationIsPlaying = true;
         }
     }
-    
-    
-
 
     void Update()
     {

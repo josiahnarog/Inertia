@@ -112,6 +112,14 @@ public class Unit : MapObject, IQPathUnit {
             OnObjectSteered(Facing);
         }
     }
+    public void DoMoveAhead()
+    {
+        Hex hexUnitIsFacing = Hex.getHexInDirection(Facing);
+        Debug.LogError("My direction is: " + Facing.Name);
+        Debug.LogError("Column direction: " + hexUnitIsFacing.Q);
+        Debug.LogError("Row direction: " + hexUnitIsFacing.R);
+        SetHex(hexUnitIsFacing);
+    }
 
     /// <summary>
     /// Processes one tile worth of movement for the unit

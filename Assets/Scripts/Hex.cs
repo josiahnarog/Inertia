@@ -22,6 +22,15 @@ public class Hex : IQPathTile {
         units = new HashSet<Unit>();
     }
 
+    public Hex getHexInDirection(Direction direction)
+    {
+        var newQ =  (this.Q + direction.Q);
+        var newR = (this.R + direction.R);
+        Hex hexInDirection = HexMap.GetHexAt(newQ, newR);
+        return hexInDirection;
+
+    }
+
     // Q + R + S = 0
     // S = -(Q + R)
 

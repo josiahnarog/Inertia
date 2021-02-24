@@ -111,7 +111,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
 
     // TODO: Link up with the Hex class's version of this
     [System.NonSerialized] public bool AllowWrapEastWest = true;
-    [System.NonSerialized] public bool AllowWrapNorthSouth = true;
+    [System.NonSerialized] public bool AllowWrapNorthSouth = false;
 
     private Hex[,] hexes;
     private Dictionary<Hex, GameObject> hexToGameObjectMap;
@@ -287,56 +287,6 @@ public class HexMap : MonoBehaviour, IQPathWorld {
                 h.TerrainType = Hex.TERRAIN_TYPE.GRASSLANDS;
                 h.ElevationType = Hex.ELEVATION_TYPE.FLAT;
                 mf.mesh = MeshFlat;
-                // h.Elevation = 0;
-
-                // if(h.Elevation >= HeightFlat && h.Elevation < HeightMountain)
-                // {
-                //     if(h.Moisture >= MoistureJungle)
-                //     {
-                //         mr.material = MatGrasslands;
-                //         h.TerrainType = Hex.TERRAIN_TYPE.GRASSLANDS;
-                //         h.FeatureType = Hex.FEATURE_TYPE.RAINFOREST;
-                //
-                //         // Spawn trees
-                //         Vector3 p = hexGO.transform.position;
-                //         if(h.Elevation >= HeightHill)
-                //         {
-                //             p.y += 0.25f;
-                //         }
-                //
-                //
-                //         GameObject.Instantiate(JunglePrefab, p, Quaternion.identity, hexGO.transform);
-                //     }
-                //     else if(h.Moisture >= MoistureForest)
-                //     {
-                //         mr.material = MatGrasslands;
-                //         h.TerrainType = Hex.TERRAIN_TYPE.GRASSLANDS;
-                //         h.FeatureType = Hex.FEATURE_TYPE.FOREST;
-                //
-                //         // Spawn trees
-                //         Vector3 p = hexGO.transform.position;
-                //         if(h.Elevation >= HeightHill)
-                //         {
-                //             p.y += 0.25f;
-                //         }
-                //         GameObject.Instantiate(ForestPrefab, p, Quaternion.identity, hexGO.transform);
-                //     }
-                //     else if(h.Moisture >= MoistureGrasslands)
-                //     {
-                //         mr.material = MatGrasslands;
-                //         h.TerrainType = Hex.TERRAIN_TYPE.GRASSLANDS;
-                //     }
-                //     else if(h.Moisture >= MoisturePlains)
-                //     {
-                //         mr.material = MatPlains;
-                //         h.TerrainType = Hex.TERRAIN_TYPE.PLAINS;
-                //     }
-                //     else 
-                //     {
-                //         mr.material = MatDesert;
-                //         h.TerrainType = Hex.TERRAIN_TYPE.DESERT;
-                //     }
-                // }
 
                 if(h.Elevation >= HeightMountain)
                 {
