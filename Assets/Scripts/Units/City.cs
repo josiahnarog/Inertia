@@ -59,7 +59,7 @@ public class City : MapObject
             () => {
                 this.Hex.HexMap.SpawnUnitAt(
                     new Unit(),
-                    this.Hex.HexMap.UnitDwarfPrefab,
+                    this.Hex.HexMap.UnitShipPrefab,
                     this.Hex.Q,
                     this.Hex.R
                 );

@@ -82,10 +82,10 @@ public class HexMap_Continent : HexMap {
         // For development, turn on CanBuildCities on this unit
         unit.CanBuildCities = true;
 
-        SpawnUnitAt(unit, UnitDwarfPrefab, 36, 15);
+        SpawnUnitAt(unit, UnitShipPrefab, 36, 15);
         // SpawnUnitAt(unit, UnitShipPrefab, 37, 15);
         
-        // SpawnUnitAt(unit, UnitDwarfPrefab, 36, 14);
+        // SpawnUnitAt(unit, UnitShipPrefab, 36, 14);
         // SpawnUnitAt(unit, UnitShipPrefab, 37, 15);
 
         City city = new City();

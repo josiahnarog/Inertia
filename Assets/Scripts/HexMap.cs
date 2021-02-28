@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using QPath;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class HexMap : MonoBehaviour, IQPathWorld {
 
@@ -89,8 +90,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
     public Material MatMountains;
     public Material MatDesert;
     public Material MatOpenSpace;
-
-    public GameObject UnitDwarfPrefab;
+    
     public GameObject CityPrefab;
     public GameObject UnitShipPrefab;
 

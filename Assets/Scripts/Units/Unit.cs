@@ -13,12 +13,20 @@ public class Unit : MapObject, IQPathUnit {
 
     public Direction Facing  = Direction.East;
     public int Movement = 2;
+
     public int MovementRemaining = 2;
-    public int SteerRating = 0;
-    public int SteerPointsRemaining = 0;
+    
+
 
     public bool CanBuildCities = false;
     public bool SkipThisUnit = false;
+    
+    
+    // This is all my pulse movement stuff.
+    public int MovementRating = 4;
+    public int MovementPointsRemaining = 4;
+    public int SteerRating = 0;
+    public int SteerPointsRemaining = 0;
     public delegate void ObjectSteeredDelegate ( Direction newFacing ); 
     public event ObjectSteeredDelegate OnObjectSteered;
     
