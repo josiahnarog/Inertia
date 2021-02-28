@@ -104,6 +104,16 @@ public class Unit : MapObject, IQPathUnit {
         SteerPointsRemaining = SteerRating;
     }
     
+    public void DoSteerCounterClockwise()
+    {
+        this.DoSteer(SteerDirection.Counterclockwise);
+    }
+    
+    public void DoSteerClockwise()
+    {
+        this.DoSteer(SteerDirection.Clockwise);
+    }
+    
     public void DoSteer(SteerDirection steer)
     {
         if(SteerPointsRemaining == 0){
