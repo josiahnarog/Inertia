@@ -53,7 +53,7 @@ public class City : MapObject
     {
         buildingJob = new BuildingJob(
             null, 
-            "Dwarf Warrior",
+            "Tri-ship",
             100,
             0,
             () => {

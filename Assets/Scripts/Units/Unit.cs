@@ -29,12 +29,36 @@ public class Unit : MapObject, IQPathUnit {
     public int SteerPointsRemaining = 0;
     public delegate void ObjectSteeredDelegate ( Direction newFacing ); 
     public event ObjectSteeredDelegate OnObjectSteered;
+
+    private Queue<Move> _moveQueue;
+    
+    public void ClearMoveQueue()
+    {
+        SkipThisUnit = false;
+        this._moveQueue = new Queue<Move>();
+    }
+    
+    public void SetMoveQueue( IEnumerable<Move> moveArray )
+    {
+        SkipThisUnit = false;
+        this._moveQueue = new Queue<Move>(moveArray);
+    }
+    
+    public Move[] GetMoveQueue()
+    {
+        return _moveQueue?.ToArray();
+    }
+    
+    public int GetMovePathLength()
+    {
+        return this._moveQueue.Count;
+    }
     
     /// <summary>
     /// List of hexes to walk through (from pathfinder).
     /// NOTE: First item is always the hex we are standing in.
     /// </summary>
-    List<Hex> hexPath;
+    List<Hex> _hexPath;
 
     // TODO: This should probably be moved to some kind of central option/config file
     const bool MOVEMENT_RULES_LIKE_CIV6 = true;
@@ -62,23 +86,23 @@ public class Unit : MapObject, IQPathUnit {
     public void ClearHexPath()
     {
         SkipThisUnit = false;
-        this.hexPath = new List<Hex>();
+        this._hexPath = new List<Hex>();
     }
 
     public void SetHexPath( Hex[] hexArray )
     {
         SkipThisUnit = false;
-        this.hexPath = new List<Hex>( hexArray );
+        this._hexPath = new List<Hex>( hexArray );
     }
 
     public Hex[] GetHexPath()
     {
-        return (this.hexPath == null ) ? null : this.hexPath.ToArray();
+        return _hexPath?.ToArray();
     }
 
     public int GetHexPathLength()
     {
-        return this.hexPath.Count;
+        return this._hexPath.Count;
     }
 
     public bool UnitWaitingForOrders()
@@ -91,7 +115,7 @@ public class Unit : MapObject, IQPathUnit {
         // Returns true if we have movement left but nothing queued
         if( 
             MovementRemaining > 0 && 
-            (hexPath==null || hexPath.Count==0) 
+            (_hexPath==null || _hexPath.Count==0) 
             // TODO: Maybe we've been told to Fortify/Alert/SkipTurn
         )
         {
@@ -151,14 +175,14 @@ public class Unit : MapObject, IQPathUnit {
         if(MovementRemaining <= 0)
             return false;
 
-        if(hexPath == null || hexPath.Count == 0)
+        if(_hexPath == null || _hexPath.Count == 0)
         {
             return false;
         }
 
         // Grab the first hex from our queue
-        Hex hexWeAreLeaving = hexPath[0];
-        Hex newHex = hexPath[1];
+        Hex hexWeAreLeaving = _hexPath[0];
+        Hex newHex = _hexPath[1];
 
         int costToEnter = MovementCostToEnterHex( newHex );
 
@@ -168,21 +192,21 @@ public class Unit : MapObject, IQPathUnit {
             return false;
         }
 
-        hexPath.RemoveAt(0);
+        _hexPath.RemoveAt(0);
 
-        if( hexPath.Count == 1 )
+        if( _hexPath.Count == 1 )
         {
             // The only hex left in the list, is the one we are moving to now,
             // therefore we have no more path to follow, so let's just clear
             // the queue completely to avoid confusion.
-            hexPath = null;
+            _hexPath = null;
         }
 
         // Move to the new Hex
         SetHex( newHex );
         MovementRemaining = Mathf.Max(MovementRemaining-costToEnter, 0);
 
-        return hexPath != null && MovementRemaining > 0;
+        return _hexPath != null && MovementRemaining > 0;
     }
 
     public int MovementCostToEnterHex( Hex hex )
