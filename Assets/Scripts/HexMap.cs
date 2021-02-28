@@ -313,7 +313,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
                 }
 
                 hexGO.GetComponentInChildren<TextMesh>().text = 
-                    string.Format("{0},{1}\n{2}", column, row, h.BaseMovementCost( false, false, false ));
+                    string.Format("{0},{1}", column, row);
                 
             }
         }
