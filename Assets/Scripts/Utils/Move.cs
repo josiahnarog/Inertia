@@ -14,14 +14,14 @@ public class Forward : Move
 {
     public new void MoveUnit(Unit unit)
     {
-        unit.DoSteerClockwise();
+        unit.DoMoveAhead();
     }
 }
 public class SteerClockwise : Move
 {
     public new void MoveUnit(Unit unit)
     {
-        unit.DoMoveAhead();
+        unit.DoSteerClockwise();
     }
 }
 public class SteerCounterClockwise : Move
