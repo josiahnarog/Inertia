@@ -5,29 +5,35 @@ using UnityEngine;
 
 public class Move : Object
 {
-    public void MoveUnit(Unit unit)
+    public virtual void MoveUnit(Unit unit)
     {
-        return;
+        Debug.Log("Why am I doing an empty move?");
     }
+
 }
+
 public class Forward : Move
 {
-    public new void MoveUnit(Unit unit)
+    public override void MoveUnit(Unit unit)
     {
+        Debug.Log("Doing DoMoveAhead");
         unit.DoMoveAhead();
     }
 }
+
 public class SteerClockwise : Move
 {
-    public new void MoveUnit(Unit unit)
+    public override void MoveUnit(Unit unit)
     {
+        Debug.Log("Doing DoSteerClockwise");
         unit.DoSteerClockwise();
     }
 }
 public class SteerCounterClockwise : Move
 {
-    public new void MoveUnit(Unit unit)
+    public override void MoveUnit(Unit unit)
     {
+        Debug.Log("Doing DoSteerCounterClockwise");
         unit.DoSteerCounterClockwise();
     }
 }

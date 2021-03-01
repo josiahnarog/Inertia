@@ -17,6 +17,8 @@ public class HexMap : MonoBehaviour, IQPathWorld {
 
     public bool AnimationIsPlaying = false;
 
+    
+    
     public delegate void CityCreatedDelegate ( City city, GameObject cityGO );
     public event CityCreatedDelegate OnCityCreated;
 
@@ -41,10 +43,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
             StartCoroutine( DoAllUnitMoves() );
         }
         
-        // if(Input.GetKeyDown(KeyCode.R) &&  != null)
-        // {
-        //     Unit u = SelectedUnit;
-        // }
+        Debug.Log(AnimationIsPlaying);
     }
 
     IEnumerator DoAllUnitMoves()

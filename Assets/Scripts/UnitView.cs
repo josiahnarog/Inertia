@@ -11,6 +11,8 @@ public class UnitView : MonoBehaviour {
         newAngles = this.transform.eulerAngles;
     }
 
+    public bool unitAnimationPlaying = false;
+
     Vector3 newPosition;
     Vector3 newAngles;
 
@@ -23,6 +25,8 @@ public class UnitView : MonoBehaviour {
 
     public void OnUnitSteered(Direction newDirection)
     {
+        this.unitAnimationPlaying = true;
+        
         Vector3 oldAngles = this.transform.eulerAngles;
         newAngles = new Vector3(
                 0, newDirection.Rotation, 0
@@ -37,9 +41,8 @@ public class UnitView : MonoBehaviour {
         // in the hierarchy
         // Our correct position when we aren't moving, is to be at
         // 0,0 local position relative to our parent.
-
-        // TODO: Get rid of VerticalOffset and instead use a raycast to determine correct height
-        // on each frame.
+        
+        this.unitAnimationPlaying = true;
 
         Vector3 oldPosition = oldHex.PositionFromCamera();
         newPosition = newHex.PositionFromCamera();
@@ -65,12 +68,6 @@ public class UnitView : MonoBehaviour {
 
         this.transform.position = Vector3.SmoothDamp( this.transform.position, newPosition, ref currentVelocity, smoothTime );
 
-        // TODO: Figure out the best way to determine the end of our animation
-        if( Vector3.Distance( this.transform.position, newPosition ) < 0.1f )
-        {
-            GameObject.FindObjectOfType<HexMap>().AnimationIsPlaying = false;
-        }
-        
         // The step size is equal to speed times frame time.
         var step = smoothRotation * Time.deltaTime;
 
@@ -78,6 +75,14 @@ public class UnitView : MonoBehaviour {
         
         // Rotate our transform a step closer to the target's.
         transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, step);
+        
+        if( (Quaternion.Angle( this.transform.rotation, targetRotation ) < 0.1f)  &&  (Vector3.Distance( this.transform.position, newPosition ) < 0.1f))
+        {
+            GameObject.FindObjectOfType<HexMap>().AnimationIsPlaying = false;
+            Debug.Log("We are no longer rotating!");
+            this.unitAnimationPlaying = false;
+        }
+        
         
     }
 

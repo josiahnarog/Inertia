@@ -13,11 +13,7 @@ public class Unit : MapObject, IQPathUnit {
 
     public Direction Facing  = Direction.East;
     public int Movement = 2;
-
     public int MovementRemaining = 2;
-    
-
-
     public bool CanBuildCities = false;
     public bool SkipThisUnit = false;
     
@@ -25,6 +21,8 @@ public class Unit : MapObject, IQPathUnit {
     // This is all my pulse movement stuff.
     public int MovementRating = 4;
     public int MovementPointsRemaining = 4;
+    public int MovementPointsPerPulse = 2;
+    public int MovementPointsRemainingThisPulse = 2;
     public int SteerRating = 0;
     public int SteerPointsRemaining = 0;
     public delegate void ObjectSteeredDelegate ( Direction newFacing ); 
@@ -38,6 +36,22 @@ public class Unit : MapObject, IQPathUnit {
         this._moveQueue = new Queue<Move>();
     }
     
+    public void AddToMoveQueue( Move move )
+    {
+        if((_moveQueue==null))
+        {
+            this.ClearMoveQueue();
+        }
+        
+        this._moveQueue.Enqueue(move);
+    }
+    
+    public Move TakeFromMoveQueue()
+    {
+        Move move = this._moveQueue.Dequeue();
+        return move;
+    }
+    
     public void SetMoveQueue( IEnumerable<Move> moveArray )
     {
         SkipThisUnit = false;
@@ -49,9 +63,32 @@ public class Unit : MapObject, IQPathUnit {
         return _moveQueue?.ToArray();
     }
     
-    public int GetMovePathLength()
+    public int GetMoveQueueLength()
     {
         return this._moveQueue.Count;
+    }
+    
+    public bool DoQueuedMove()
+    {
+        Debug.Log("DoQueuedMove");
+        // Do queued move
+        // 
+        if(MovementPointsRemainingThisPulse <= 0)
+            return false;
+
+        if(_moveQueue == null || _moveQueue.Count == 0)
+        {
+            return false;
+        }
+
+        // Grab the first move from our queue
+        Move currentMove = _moveQueue.Dequeue();
+        
+        // Do the move
+        Debug.Log("Doing a queued move.");
+        currentMove.MoveUnit(this);
+
+        return _moveQueue != null && MovementPointsRemainingThisPulse > 0;
     }
     
     /// <summary>
