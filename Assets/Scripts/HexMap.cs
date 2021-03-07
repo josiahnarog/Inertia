@@ -103,7 +103,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
     [System.NonSerialized] public float MoistureGrasslands = 0f;
     [System.NonSerialized] public float MoisturePlains = -0.75f;
 
-    [System.NonSerialized] public int NumRows = 30;
+    [System.NonSerialized] public int NumRows = 60;
     [System.NonSerialized] public int NumColumns = 60;
 
     // TODO: Link up with the Hex class's version of this

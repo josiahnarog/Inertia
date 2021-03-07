@@ -83,10 +83,6 @@ public class HexMap_Continent : HexMap {
         unit.CanBuildCities = true;
 
         SpawnUnitAt(unit, UnitShipPrefab, 36, 15);
-        // SpawnUnitAt(unit, UnitShipPrefab, 37, 15);
-        
-        // SpawnUnitAt(unit, UnitShipPrefab, 36, 14);
-        // SpawnUnitAt(unit, UnitShipPrefab, 37, 15);
 
         City city = new City();
         SpawnCityAt(city, CityPrefab, 35, 15);
