@@ -10,10 +10,12 @@ public class UnitSelectionPanel : MonoBehaviour {
         selectionController = GameObject.FindObjectOfType<SelectionController>();
 	}
 
+	public int moveQueueLength;
+
     public Text Title;
     public Text Movement;
     public Text Facing;
-    public Text HexPath;
+    public Text MoveQueueLength;
     // public Text TurnRatingRemaining;
 
     public GameObject TurnCounterClockwiseButton;
@@ -33,12 +35,12 @@ public class UnitSelectionPanel : MonoBehaviour {
 
             Movement.text = string.Format(
                 "MP Remaining: {0}/{1}", 
-                selectionController.SelectedUnit.MovementRemaining, 
-                selectionController.SelectedUnit.Movement
+                selectionController.SelectedUnit.MovementPointsRemainingThisPulse, 
+                selectionController.SelectedUnit.MovementRating
             );
 
-            Hex[] hexPath = selectionController.SelectedUnit.GetHexPath();
-            HexPath.text  = hexPath == null ? "0" : hexPath.Length.ToString();
+            moveQueueLength = selectionController.SelectedUnit.GetMoveQueueLength();
+            MoveQueueLength.text  =  string.Format("Move queue length: {0}",moveQueueLength);
             
             Direction facing = selectionController.SelectedUnit.Facing;
             Facing.text = string.Format("Current Facing: {0} {1} {2}",

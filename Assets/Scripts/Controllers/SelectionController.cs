@@ -38,7 +38,6 @@ public class SelectionController : MonoBehaviour {
             {
                 // We already have a city selected, make sure we cancel the old mouse mode
                 mouseController.CancelUpdateFunc();
-
             }
 
             __selectedCity = null;

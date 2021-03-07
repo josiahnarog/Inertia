@@ -42,8 +42,6 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         {
             StartCoroutine( DoAllUnitMoves() );
         }
-        
-        Debug.Log(AnimationIsPlaying);
     }
 
     IEnumerator DoAllUnitMoves()
@@ -131,6 +129,12 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         {
             // New turn has begun!
             TurnNumber++;
+
+            foreach (Unit u in CurrentPlayer.Units)
+            {
+                u.RefreshMovement();
+            }
+
             Debug.Log("STARTING TURN: " + TurnNumber);
         }
 
@@ -265,8 +269,6 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         }
 
         UpdateHexVisuals();
-
-        //StaticBatchingUtility.Combine( this.gameObject );
     }
 
     public void UpdateHexVisuals()
@@ -333,7 +335,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         return results.ToArray();
     }
 
-    public void SpawnUnitAt( Unit unit, GameObject prefab, int q, int r )
+    public void SpawnUnitAt( Unit unit, GameObject prefab, int q, int r)
     {
         if(unitToGameObjectMap == null)
         {
@@ -343,6 +345,7 @@ public class HexMap : MonoBehaviour, IQPathWorld {
         Hex myHex = GetHexAt(q, r);
         GameObject myHexGO = hexToGameObjectMap[myHex];
         unit.SetHex(myHex);
+        // unit.SetName();
 
         GameObject unitGO = (GameObject)Instantiate(prefab, myHexGO.transform.position, Quaternion.identity, myHexGO.transform);
         unit.OnObjectMoved += unitGO.GetComponent<UnitView>().OnUnitMoved;
@@ -362,7 +365,6 @@ public class HexMap : MonoBehaviour, IQPathWorld {
 
     public void SpawnCityAt( City city, GameObject prefab, int q, int r )
     {
-        Debug.Log("SpawnCityAt");
         if(cityToGameObjectMap == null)
         {
             cityToGameObjectMap = new Dictionary<City, GameObject>();

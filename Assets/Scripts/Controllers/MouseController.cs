@@ -115,11 +115,11 @@ public class MouseController : MonoBehaviour
         {
             // Left mouse button just went down.
             // This doesn't do anything by itself, really.
-            Debug.Log("MOUSE DOWN");
+            // Debug.Log("MOUSE DOWN");
         }
         else if( Input.GetMouseButtonUp(0) )
         {
-            Debug.Log("MOUSE UP -- click!");
+            // Debug.Log("MOUSE UP -- click!");
 
             // TODO: Are we clicking on a hex with a unit?
             //          If so, select it
@@ -232,7 +232,6 @@ public class MouseController : MonoBehaviour
     {
         if( Input.GetMouseButtonUp(0) )
         {
-            Debug.Log("Cancelling camera drag.");
             CancelUpdateFunc();
             return;
         }

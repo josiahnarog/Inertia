@@ -7,9 +7,9 @@ public class SteerClockwiseButton : MonoBehaviour
 {
     public void SteerClockwise()
     {
-        SteerDirection steer = SteerDirection.Clockwise;
         SelectionController sc = GameObject.FindObjectOfType<SelectionController>();
-        Unit selectedUnit = sc.SelectedUnit;
-        selectedUnit.DoSteer(steer);
+        Unit u = sc.SelectedUnit;
+        SteerClockwise steerClockwise = new SteerClockwise();
+        u.AddToMoveQueue(steerClockwise);
     }
 }

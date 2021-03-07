@@ -6,10 +6,10 @@ namespace UI
     {
         public void SteerCounterClockwise()
         {
-            SteerDirection steer = SteerDirection.Counterclockwise;
             SelectionController sc = GameObject.FindObjectOfType<SelectionController>();
-            Unit selectedUnit = sc.SelectedUnit;
-            selectedUnit.DoSteer(steer);
+            Unit u = sc.SelectedUnit;
+            SteerCounterClockwise steerCounterClockwise = new SteerCounterClockwise();
+            u.AddToMoveQueue(steerCounterClockwise);
         }
     }
 }

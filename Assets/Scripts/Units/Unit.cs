@@ -6,9 +6,16 @@ using System.Linq;
 
 public class Unit : MapObject, IQPathUnit {
 
+    
     public Unit()
     {
-        Name = "Ship";
+        // _unitNames = GameObject.FindObjectOfType<UnitNames>();
+        // Name = _unitNames.GETNextName();
+        Name = "ShipOne";
+        MovementRating = 18;
+        MovementPointsRemainingThisPulse = 6;
+        SteerRating = 0;
+        SteerPointsRemaining = 0;
     }
 
     public Direction Facing  = Direction.East;
@@ -16,19 +23,22 @@ public class Unit : MapObject, IQPathUnit {
     public int MovementRemaining = 2;
     public bool CanBuildCities = false;
     public bool SkipThisUnit = false;
-    
-    
+
     // This is all my pulse movement stuff.
-    public int MovementRating = 4;
-    public int MovementPointsRemaining = 4;
-    public int MovementPointsPerPulse = 2;
-    public int MovementPointsRemainingThisPulse = 2;
-    public int SteerRating = 0;
-    public int SteerPointsRemaining = 0;
+    public int MovementRating;
+    public int MovementPointsRemainingThisPulse;
+    public int SteerRating;
+    public int SteerPointsRemaining;
     public delegate void ObjectSteeredDelegate ( Direction newFacing ); 
     public event ObjectSteeredDelegate OnObjectSteered;
 
     private Queue<Move> _moveQueue;
+    private UnitNames _unitNames;
+
+    // public void SetName()
+    // {
+    //
+    // }
     
     public void ClearMoveQueue()
     {
@@ -70,22 +80,28 @@ public class Unit : MapObject, IQPathUnit {
     
     public bool DoQueuedMove()
     {
-        Debug.Log("DoQueuedMove");
+        Debug.Log("Movement Points Remaining = " + MovementPointsRemainingThisPulse);
+        
         // Do queued move
-        // 
-        if(MovementPointsRemainingThisPulse <= 0)
+        if (MovementPointsRemainingThisPulse <= 0)
+        {
+            Debug.Log("No Movement Points Remaining");
             return false;
+        }
 
         if(_moveQueue == null || _moveQueue.Count == 0)
         {
+            Debug.Log("No Moves Queued");
             return false;
         }
 
         // Grab the first move from our queue
         Move currentMove = _moveQueue.Dequeue();
+
+        // Spend a move point.
+        MovementPointsRemainingThisPulse -= 1;
         
         // Do the move
-        Debug.Log("Doing a queued move.");
         currentMove.MoveUnit(this);
 
         return _moveQueue != null && MovementPointsRemainingThisPulse > 0;
@@ -194,9 +210,6 @@ public class Unit : MapObject, IQPathUnit {
     public void DoMoveAhead()
     {
         Hex hexUnitIsFacing = Hex.getHexInDirection(Facing);
-        Debug.LogError("My direction is: " + Facing.Name);
-        Debug.LogError("Column direction: " + hexUnitIsFacing.Q);
-        Debug.LogError("Row direction: " + hexUnitIsFacing.R);
         SetHex(hexUnitIsFacing);
     }
 

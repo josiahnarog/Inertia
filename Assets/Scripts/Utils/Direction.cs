@@ -43,12 +43,9 @@ public class Direction : Enumeration
 
     public Direction DirectionAfterSteer(SteerDirection steer)
     {
-        Debug.Log("Input Direction enum: " + this.Id);
         // Debug.Log("Input Steer enum: " + (int) steer);
         int compassOffset = this.Id + (int) steer;
-
         Direction newDirection = Direction.Compass[compassOffset];
-        Debug.Log("Output Direction Enum: " + newDirection.Id);
         return newDirection;
     }
 }
