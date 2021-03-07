@@ -8,13 +8,16 @@ public class Player
 {
     public Player( string name )
     {
-        PlayerName = name; 
+        PlayerName = name;
+
+        InitiativeBonus = 0;
 
         units = new HashSet<Unit>();
         cities = new HashSet<City>();
     }
 
     public string PlayerName;
+    public int InitiativeBonus;
 
     public enum PlayerType { LOCAL, AI, REMOTE };
     public PlayerType Type = PlayerType.LOCAL;
